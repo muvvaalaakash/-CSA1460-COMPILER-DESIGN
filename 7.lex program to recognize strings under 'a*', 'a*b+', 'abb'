@@ -1,0 +1,45 @@
+%{
+%}
+ 
+%s A B C DEAD
+
+%%
+<INITIAL>a BEGIN A;
+<INITIAL>b BEGIN INITIAL;
+<INITIAL>[^ab\n] BEGIN DEAD;
+<INITIAL>\n BEGIN INITIAL; {printf("Not Accepted\n");}
+
+<A>a BEGIN A;
+<A>b BEGIN B;
+<A>[^ab\n] BEGIN DEAD;
+<A>\n BEGIN INITIAL; {printf("Not Accepted\n");}
+  
+<B>a BEGIN A;
+<B>b BEGIN C;
+<B>[^ab\n] BEGIN DEAD;
+<B>\n BEGIN INITIAL; {printf("Not Accepted\n");}
+
+
+<C>a BEGIN A;
+<C>b BEGIN INITIAL;
+<C>[^ab\n] BEGIN DEAD;
+<C>\n BEGIN INITIAL; {printf("Accepted\n");}
+
+<DEAD>[^\n] BEGIN DEAD;
+<DEAD>\n BEGIN INITIAL; {printf("Invalid\n");}
+ 
+%%
+
+int yywrap()
+{
+return 1;
+}  
+
+// main method 
+int main()
+{
+   printf("Enter String\n");
+   // called yylex
+   yylex();
+return 0;
+}
