@@ -1,0 +1,35 @@
+%{
+#include<stdio.h>
+#include<stdlib.h>
+int count=0,space=0,tcount=0,rcount=0;  /*Global variables*/
+%}
+%%
+\n count++;				
+" " space++;			
+\t tcount++;			
+[^\t" "\n] rcount++; 	
+. ;
+%%
+
+/*Auxiliary function*/
+/*Driver function*/
+int main(void)
+{
+/*Read the input file q1.txt*/
+yyin=fopen("q1.txt","r");								
+/*call the yylex function.*/
+yylex();	
+/*print the number of lines.*/
+printf("Number of lines are:: %d\n",count);				
+/*print the number of spaces.*/
+printf("Number of spaces are:: %d\n",space);			
+/*print the number of tab spaces.*/
+printf("Number of tab character are:: %d\n",tcount);    
+/*print the number of other character.*/
+printf("Number of rest character are:: %d\n",rcount);   
+return 0;
+}
+
+/*call the yywrap function*/
+int yywrap()
+{return 1;}
